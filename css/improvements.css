@@ -1,6 +1,6 @@
 /* Progressive enhancements on top of the original Webflow design.
    Keep this file separate to avoid editing generated/minified CSS. */
-:root { scroll-behavior: smooth; }
+/* Native instant anchor jumps avoid lengthy animated scrolling on long CVs. */
 body { overflow-wrap: break-word; }
 .skip-link {
   position: absolute; z-index: 1000; top: -60px; left: 16px;
@@ -27,10 +27,9 @@ body { overflow-wrap: break-word; }
   align-self: center; width: 100%; max-width: 1140px;
   display: flex; gap: 6px; align-items: center;
   margin-bottom: 32px; padding: 10px;
-  position: sticky; top: 10px; z-index: 30;
-  background: rgba(255, 255, 255, .96);
+  position: static;
+  background: #fff;
   border: 1px solid rgba(0,0,0,.07); border-radius: 16px;
-  box-shadow: 0 6px 25px rgba(0,0,0,.05);
 }
 .cv-nav a {
   color: #333; white-space: nowrap; text-decoration: none;
@@ -41,7 +40,7 @@ body { overflow-wrap: break-word; }
   background: #fff2e9; color: #a64600;
 }
 a:focus-visible { outline: 3px solid #f36d21; outline-offset: 3px; }
-.section-wrap[id] { scroll-margin-top: 95px; }
+.section-wrap[id] { scroll-margin-top: 18px; }
 .cv-skills {
   margin: 0; padding-left: 20px; line-height: 1.75;
 }
@@ -54,16 +53,18 @@ a:focus-visible { outline: 3px solid #f36d21; outline-offset: 3px; }
   .cv-intro h1 { font-size: 34px; }
   .cv-intro { margin-bottom: 20px; }
   .cv-nav {
-    overflow-x: auto; overscroll-behavior-x: contain;
-    border-radius: 12px; top: 0; margin-bottom: 25px;
-    scrollbar-width: thin;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px; border-radius: 12px; margin-bottom: 25px;
   }
-  .cv-nav a { flex: 0 0 auto; }
+  .cv-nav a {
+    min-width: 0; min-height: 44px; padding: 10px 6px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; white-space: normal; font-size: 12px;
+  }
   .section-wrap { margin-bottom: 62px; }
-  .section-wrap[id] { scroll-margin-top: 86px; }
+  .section-wrap[id] { scroll-margin-top: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  :root { scroll-behavior: auto; }
   .cv-nav a { transition: none; }
 }
 @media print {
