@@ -12,23 +12,35 @@ permissions:
 jobs:
   site-integrity:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Validate HTML and asset references
         run: python3 scripts/check_site.py
-      - name: Add preview URL to Actions summary
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Node.js for browser smoke test
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test navigation with headless Chrome (desktop and mobile)
         run: |
-          {
-            echo '### Live HTML preview'
-            echo "Preview: https://raw.githack.com/${GITHUB_REPOSITORY}/${PR_HEAD_SHA}/index.html"
-            echo 'Preview is hosted by a third-party service, independent from cv.eplus.dev.'
-          } >> "$GITHUB_STEP_SUMMARY"
-      - name: Post or update preview comment
+          command -v google-chrome
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/cv-http.log 2>&1 &
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsS http://127.0.0.1:8765/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8765/ >/dev/null
+          node scripts/browser_smoke.mjs
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-desktop-mobile-preview
+          path: artifacts/browser-smoke/*.png
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Comment with preview options
         if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
         uses: actions/github-script@v7
         with:
@@ -37,26 +49,25 @@ jobs:
             const { owner, repo } = context.repo;
             const issue_number = context.issue.number;
             const sha = context.payload.pull_request.head.sha;
-            const url = `https://raw.githack.com/${owner}/${repo}/${sha}/index.html`;
+            const rawPreview = `https://raw.githack.com/${owner}/${repo}/${sha}/index.html`;
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
             const body = [
               marker,
-              '### Live CV preview',
-              `**[Open preview (PR #${issue_number})](${url})**`,
+              '### CV preview and browser smoke test',
+              `**[View tested desktop/mobile screenshots (Actions artifact)](${runUrl})**`,
               '',
-              'This is a third-party HTML preview of the PR commit, not a deployment to the production domain. It may show a one-time confirmation screen. Do not enter sensitive data.',
+              `[Optional interactive HTML preview (third-party)](${rawPreview})`,
               '',
-              `Current version: https://cv.eplus.dev/ · Commit: \`${sha.slice(0, 12)}\``
+              'The screenshot artifact is generated from this PR by a headless browser. The optional third-party HTML preview can be slow or require a confirmation; it is not an independently hosted deployment.',
+              '',
+              `Production: https://cv.eplus.dev/ · Commit: \`${sha.slice(0,12)}\``
             ].join('\n');
             const comments = await github.paginate(github.rest.issues.listComments, {
               owner, repo, issue_number, per_page: 100
             });
-            const previous = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
-            if (previous) {
-              await github.rest.issues.updateComment({
-                owner, repo, comment_id: previous.id, body
-              });
+            const prior = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (prior) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: prior.id, body });
             } else {
-              await github.rest.issues.createComment({
-                owner, repo, issue_number, body
-              });
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
             }
