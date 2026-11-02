@@ -79,7 +79,7 @@ try {
   check(await evaluate("document.title.includes('David Nguyen')"), 'Document title missing');
   check(await evaluate("document.querySelectorAll('script[src*=jquery],script[src*=webflow]').length === 0"), 'Unused libraries loaded');
   check(await evaluate("getComputedStyle(document.documentElement).scrollBehavior !== 'smooth'"), 'Smooth scroll still enabled');
-  check(await evaluate(`document.querySelectorAll('a.download-cv-button[href$="DavidNguyen-Resume.pdf"]').length === 2`), 'PDF actions broken');
+  check(await evaluate(`document.querySelectorAll('a[download][href$="DavidNguyen-Resume.pdf"]').length === 2`), 'PDF actions broken');
 
   for (const device of [
     { name: 'desktop', width: 1440, height: 900, mobile: false },
@@ -89,11 +89,13 @@ try {
       width: device.width, height: device.height, deviceScaleFactor: 1, mobile: device.mobile,
     });
     await sleep(250);
+    if (device.mobile) await evaluate("document.querySelector('.mobile-nav').open = true");
+    const navSelector = device.mobile ? '.mobile-nav nav a' : '.cv-nav a';
     const layout = await evaluate(`({
       viewport: innerWidth,
       width: document.documentElement.scrollWidth,
       navPosition: getComputedStyle(document.querySelector('.cv-nav')).position,
-      links: Array.from(document.querySelectorAll('.cv-nav a'), a => ({
+      links: Array.from(document.querySelectorAll('${navSelector}'), a => ({
         hash: a.hash, height: a.getBoundingClientRect().height
       }))
     })`);
@@ -104,7 +106,8 @@ try {
 
     for (const link of layout.links) {
       const jump = await evaluate(`(() => {
-        const a = Array.from(document.querySelectorAll('.cv-nav a')).find(x => x.hash === '${link.hash}');
+        if (${device.mobile}) document.querySelector('.mobile-nav').open = true;
+        const a = Array.from(document.querySelectorAll('${navSelector}')).find(x => x.hash === '${link.hash}');
         const target = document.getElementById(a.hash.substring(1));
         const started = performance.now();
         a.click();
@@ -117,7 +120,7 @@ try {
       console.log(`${device.name} ${link.hash}: ${jump.ms.toFixed(1)}ms`);
     }
 
-    await evaluate('scrollTo(0, 0)');
+    await evaluate("document.querySelector('.mobile-nav').open = false; scrollTo(0, 0)");
     await fs.mkdir(output, { recursive: true });
     const screenshot = await command('Page.captureScreenshot', { format: 'png' });
     await fs.writeFile(path.join(output, `${device.name}.png`), Buffer.from(screenshot.data, 'base64'));
