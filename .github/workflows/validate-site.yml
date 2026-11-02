@@ -1,0 +1,73 @@
+name: Validate CV site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  site-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Validate HTML and asset references
+        run: python3 scripts/check_site.py
+      - name: Set up Node.js for browser smoke test
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test navigation with headless Chrome (desktop and mobile)
+        run: |
+          command -v google-chrome
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/cv-http.log 2>&1 &
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsS http://127.0.0.1:8765/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8765/ >/dev/null
+          node scripts/browser_smoke.mjs
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-desktop-mobile-preview
+          path: artifacts/browser-smoke/*.png
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Comment with preview options
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- cv-pr-preview -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const sha = context.payload.pull_request.head.sha;
+            const rawPreview = `https://raw.githack.com/${owner}/${repo}/${sha}/index.html`;
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+            const body = [
+              marker,
+              '### CV preview and browser smoke test',
+              `**[View tested desktop/mobile screenshots (Actions artifact)](${runUrl})**`,
+              '',
+              `[Optional interactive HTML preview (third-party)](${rawPreview})`,
+              '',
+              'The screenshot artifact is generated from this PR by a headless browser. The optional third-party HTML preview can be slow or require a confirmation; it is not an independently hosted deployment.',
+              '',
+              `Production: https://cv.eplus.dev/ · Commit: \`${sha.slice(0,12)}\``
+            ].join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100
+            });
+            const prior = comments.find(c => c.user?.type === 'Bot' && c.body?.includes(marker));
+            if (prior) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: prior.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
