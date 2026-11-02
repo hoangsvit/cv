@@ -19,8 +19,7 @@
     <link rel="canonical" href="https://cv.eplus.dev/">
     <meta content="summary_large_image" name="twitter:card">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="css/david-nguyen-cv.webflow.0ec72a95d.min.css" rel="stylesheet" type="text/css">
-    <link href="css/improvements.css" rel="stylesheet" type="text/css">
+    <link href="css/redesign.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&amp;family=Source+Serif+Pro:wght@400;600;700&amp;display=swap" rel="stylesheet">
@@ -48,22 +47,59 @@
 
 <body>
     <a class="skip-link" href="#about">Skip to content</a>
-    <div class="section main">
-        <header class="cv-intro" aria-label="Resume introduction">
-            <p class="cv-eyebrow">DAVID NGUYEN · RESUME</p>
-            <h1>Fullstack Developer</h1>
-            <p>Building reliable web applications with PHP, Laravel, Vue.js, APIs and cloud services.</p>
-        </header>
-        <nav class="cv-nav" aria-label="Resume sections">
-            <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#certificates">Certificates</a><a href="#hobbies">Interests</a>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="#top" aria-label="David Nguyen — top of page"><span class="brand-mark" aria-hidden="true">//</span> David Nguyen</a>
+        <nav class="cv-nav" aria-label="Primary navigation">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#contact">Contact</a>
         </nav>
+        <a class="header-download" href="assets/pdf/DavidNguyen-Resume.pdf" download="DavidNguyen-Resume.pdf"><span aria-hidden="true">↓</span> Download CV</a>
+        <details class="mobile-nav">
+          <summary aria-label="Open navigation menu"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span><span class="sr-only">Menu</span></summary>
+          <nav aria-label="Mobile navigation">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#contact">Contact</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main class="section main" id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">HELLO, I'M DAVID NGUYEN</p>
+          <h1 id="hero-title">Fullstack Developer</h1>
+          <p class="hero-description">Building reliable web applications with PHP, Laravel, Vue.js, APIs and cloud services. Based in Ho Chi Minh City.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="assets/pdf/DavidNguyen-Resume.pdf" download="DavidNguyen-Resume.pdf"><span aria-hidden="true">↓</span> Download CV</a>
+            <a class="btn btn-outline" href="mailto:job@eplus.dev"><span aria-hidden="true">✉</span> Contact Me</a>
+          </div>
+          <div class="hero-meta">
+            <span><span aria-hidden="true">⌖</span> Ho Chi Minh City, VN</span>
+            <a href="mailto:job@eplus.dev"><span aria-hidden="true">✉</span> job@eplus.dev</a>
+            <a href="https://github.com/hoangsvit" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">⌘</span> GitHub</a>
+          </div>
+        </div>
+        <div class="hero-portrait">
+          <div class="portrait-accent" aria-hidden="true"></div>
+          <img src="images/6673a17a9cff71312139ca62_z4331348261679_cc8e46084a59d8fbf2e34e9bc40f4177.jpg" alt="David Nguyen" width="340" height="340" fetchpriority="high" decoding="async">
+        </div>
+      </section>
         <div class="content-container">
             <div class="main-info-strip-wrap">
                 <div class="section-wrap" id="about">
                     <div class="section-name-wrap">
                         <div class="section-icon-box"><img src="images/66739e97034d3fbe8f04d128_about-card.svg"
                                 loading="lazy" alt="" decoding="async"></div>
-                        <h2 class="h2">About Me</h2>
+                        <h2 class="h2">About</h2>
                     </div>
                     <div class="section-content-wrap top-margin-small">
                         <p class="paragraph">I am a fullstack developer who enjoys building practical web applications and learning new technologies. I value clear communication, careful implementation, and dependable teamwork.</p>
@@ -73,25 +109,34 @@
                     <div class="section-name-wrap">
                         <div class="section-icon-box"><img src="images/6673d0e49b218b782cadb444_cloud%20%282%29.png"
                                 loading="lazy" alt="" decoding="async"></div>
-                        <h2 class="h2">Technical Summary</h2>
+                        <h2 class="h2">Skills</h2>
                     </div>
                     <div class="section-content-wrap top-margin-small">
-                        <ul class="cv-skills">
-                            <li><strong>Frontend:</strong> HTML, CSS, Bootstrap, responsive UI, Vue.js, Quasar, Nuxt.js</li>
-                            <li><strong>Backend:</strong> PHP, Laravel, CodeIgniter, FuelPHP</li>
-                            <li><strong>Content management:</strong> WordPress, Joomla, NukeViet, JohnCMS, XenForo</li>
-                            <li><strong>Data:</strong> MySQL, Firebase</li>
-                            <li><strong>Version control:</strong> GitHub, GitLab, Bitbucket</li>
-                            <li><strong>Integrations:</strong> REST APIs, GraphQL, webhooks, JSON</li>
-                            <li><strong>Tools:</strong> VS Code, PhpStorm, Postman, Docker, Apollo Studio</li>
-                        </ul>
+                        <div class="skills-grid">
+  <div class="skill-card">
+    <h3><span aria-hidden="true">▣</span> Frontend</h3>
+    <div class="tag-list"><span>HTML</span><span>CSS</span><span>Bootstrap</span><span>Vue.js</span><span>Quasar</span><span>Nuxt.js</span></div>
+  </div>
+  <div class="skill-card">
+    <h3><span aria-hidden="true">◇</span> Backend</h3>
+    <div class="tag-list"><span>PHP</span><span>Laravel</span><span>CodeIgniter</span><span>FuelPHP</span></div>
+  </div>
+  <div class="skill-card">
+    <h3><span aria-hidden="true">▤</span> Data &amp; Integration</h3>
+    <div class="tag-list"><span>MySQL</span><span>Firebase</span><span>REST API</span><span>GraphQL</span><span>Webhooks</span><span>JSON</span></div>
+  </div>
+  <div class="skill-card">
+    <h3><span aria-hidden="true">⚙</span> Tools &amp; Others</h3>
+    <div class="tag-list"><span>GitHub</span><span>GitLab</span><span>Bitbucket</span><span>Docker</span><span>VS Code</span><span>Postman</span><span>WordPress</span><span>Joomla</span><span>NukeViet</span><span>JohnCMS</span><span>XenForo</span><span>Apollo Studio</span></div>
+  </div>
+</div>
                     </div>
                 </div>
                 <div class="section-wrap" id="experience">
                     <div class="section-name-wrap">
                         <div class="section-icon-box"><img src="images/66739e97034d3fbe8f04d12c_case.svg" loading="lazy"
                                 alt="" decoding="async"></div>
-                        <h2 class="h2">Work Experience</h2>
+                        <h2 class="h2">Experience</h2>
                     </div>
                     <div class="section-content-wrap top-margin-normal">
                         <h3 class="h3"><strong class="bold-text-3">VINA PAYROLL OUTSOURCING CO.,LTD.</strong></h3>
@@ -104,7 +149,7 @@
                                 loading="lazy" alt="" class="additional-info-icon" decoding="async">
                             <div class="additional-info-text">06/2022 – 12/2024</div>
                         </div>
-                        <p class="paragraph top-margin-small">‍<strong>o Terra:<br>‍</strong>‍<strong>• Project
+                        <details class="experience-details"><summary>View projects &amp; responsibilities</summary><div class="experience-full"><p class="paragraph">‍<strong>o Terra:<br>‍</strong>‍<strong>• Project
                                 Description:<br>Human Resource Management System</strong>: A comprehensive human
                             resource management system that supports business administration on a specific platform and
                             is conveniently available at any time, from any location via online and mobile apps. terra
@@ -118,7 +163,7 @@
                             <strong>Technologies</strong>:- Build backend &amp; API (Laravel GraphQL)- Build frontend
                             (NuxtJS)- Server: Nginx (Viettel IDC)- MinIO (S3)<br>• <strong>Tools:</strong> VS Code,
                             Gitlab, Freedcamp, Tinkerwell, Docker, Navicat
-                        </p>
+                        </p></div></details>
                     </div>
                     <div class="section-content-wrap top-margin-normal">
                         <h3 class="h3"><strong class="bold-text-2">FOODCONNECTION CO.,LTD.</strong></h3>
@@ -131,7 +176,7 @@
                                 loading="lazy" alt="" class="additional-info-icon" decoding="async">
                             <div class="additional-info-text">11/2018 – 06/2022</div>
                         </div>
-                        <p class="paragraph top-margin-small"><strong>Implement internal projects of the company,
+                        <details class="experience-details"><summary>View projects &amp; responsibilities</summary><div class="experience-full"><p class="paragraph"><strong>Implement internal projects of the company,
                                 maintain partner websites, and write APIs to connect to the app.<br><br>o Orange
                                 Coin:<br>‍</strong>‍<strong>• Project Description:</strong>- Orange Coin assists the
                             company to remunerate the employees and actively improve the interactions between employees.
@@ -157,7 +202,7 @@
                             <strong>Responsibilities:</strong>- Receive projects from partners, maintain and upgrade.
                             fix bug.<br>• T<strong>echnologies:</strong>- FuelPHP framework- Server: Nginx/Apache (AWS
                             EC2 - Plesk)- Deployment with GIT<br>• <strong>Tools:</strong> VS Code, Bitbucket,
-                        </p>
+                        </p></div></details>
                     </div>
                     <div class="section-content-wrap top-margin-normal">
                         <h3 class="h3"><strong class="bold-text">ADQUEST ASIA CO.,LTD.</strong></h3>
@@ -169,7 +214,7 @@
                                 loading="lazy" alt="" class="additional-info-icon" decoding="async">
                             <div class="additional-info-text">01/2017 – 09/2018</div>
                         </div>
-                        <p class="paragraph top-margin-small"><strong>o 08/2018 – 9/2018: Developer, HeyGuru<br>•
+                        <details class="experience-details"><summary>View projects &amp; responsibilities</summary><div class="experience-full"><p class="paragraph"><strong>o 08/2018 – 9/2018: Developer, HeyGuru<br>•
                                 Project Description:<br>‍</strong>- HeyGuru ! connects people who possess certain skills
                             (teachers &amp; coaches), with people who want to learn or improve on those skills
                             (students).- There are unlimited subjects and areas where these skills can be imparted. The
@@ -208,7 +253,7 @@
                             frontend<br>•<strong> Technologies:</strong>- The website was developed in Codeigniter
                             Framework, Apache as the Web server, MySQL server as database.<br>•<strong>
                             </strong><strong>Tools: </strong>Phpstorm, Filezilla, Bitbucket
-                        </p>
+                        </p></div></details>
                     </div>
                     <div class="section-content-wrap top-margin-normal">
                         <h3 class="h3"><strong class="bold-text">HELLOWORLD CORP</strong></h3>
@@ -220,9 +265,9 @@
                                 loading="lazy" alt="" class="additional-info-icon" decoding="async">
                             <div class="additional-info-text">01/2016 – 12/2016</div>
                         </div>
-                        <p class="paragraph top-margin-small"><strong>- Project: Xe May Hoan Phuoc<br>The website was
+                        <details class="experience-details"><summary>View projects &amp; responsibilities</summary><div class="experience-full"><p class="paragraph"><strong>- Project: Xe May Hoan Phuoc<br>The website was
                                 developed in CMS Wordpress, Apache as Web server, MySQL server as database.<br>- Tools:
-                            </strong>Sublime Text, Filezilla<br>- <strong>Link:</strong> <a href="https://xemayhoanphuoc.vn" target="_blank" rel="noopener noreferrer">https://xemayhoanphuoc.vn</a></p>
+                            </strong>Sublime Text, Filezilla<br>- <strong>Link:</strong> <a href="https://xemayhoanphuoc.vn" target="_blank" rel="noopener noreferrer">https://xemayhoanphuoc.vn</a></p></div></details>
                     </div>
                 </div>
                 <div class="section-wrap" id="education">
@@ -250,7 +295,7 @@
                     <div class="section-name-wrap">
                         <div class="section-icon-box"><img src="images/66739e97034d3fbe8f04d12a_certificate.svg"
                                 loading="lazy" alt="" decoding="async"></div>
-                        <h2 class="h2">Courses, Trainings and Certificates</h2>
+                        <h2 class="h2">Certificates</h2>
                     </div>
                     <div class="section-content-wrap top-margin-normal">
                         <h4 class="h4">Meta Back-End Developer: (<a href="https://coursera.org/share/c5e8f841d37e2e3228d4d9f43aa11567"
@@ -325,7 +370,7 @@
                     <div class="section-name-wrap">
                         <div class="section-icon-box"><img src="images/66739e97034d3fbe8f04d133_puzzle.svg"
                                 loading="lazy" alt="" decoding="async"></div>
-                        <h2 class="h2">Hobby</h2>
+                        <h2 class="h2">Interests</h2>
                     </div>
                     <div class="section-content-wrap top-margin-normal">
                         <div class="small-boxes-grid">
@@ -368,33 +413,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="contact-info-wrap after-sections"><img
-                        src="images/6673a17a9cff71312139ca62_z4331348261679_cc8e46084a59d8fbf2e34e9bc40f4177.jpg"
-                        loading="lazy" alt="Portrait of David Nguyen" class="profile-image" decoding="async">
-                    <div class="under-picture-info">
-                        <div class="name-text">David Nguyen</div>
-                        <div class="age-text">- Fullstack Developer -</div>
-                        <div class="contact-links-wrap"><a href="https://maps.app.goo.gl/1PNSKzAUSidUuz219"
-                                target="_blank" class="contact-link w-inline-block" rel="noopener noreferrer"><img
-                                    src="images/66739e97034d3fbe8f04d130_location.svg" loading="lazy" alt=""
-                                    class="contact-icon" decoding="async">
-                                <div>Ho Chi Minh city, VN</div>
-                            </a><div class="contact-link w-inline-block" aria-label="Phone number partially masked"><img
-                                    src="images/66739e97034d3fbe8f04d139_phone.svg" loading="lazy" alt=""
-                                    class="contact-icon" decoding="async">
-                                <div>+84 365 455 xxx</div>
-                            </div><a href="mailto:job@eplus.dev" class="contact-link w-inline-block"><img
-                                    src="images/66739e97034d3fbe8f04d136_email.svg" loading="lazy" alt=""
-                                    class="contact-icon" decoding="async">
-                                <div>job@eplus.dev</div>
-                            </a></div><a href="assets/pdf/DavidNguyen-Resume.pdf" download="DavidNguyen-Resume.pdf" type="application/pdf" class="download-cv-button w-inline-block">
-                            <div class="button-content-wrap"><img src="images/66739e97034d3fbe8f04d129_download.svg"
-                                    loading="lazy" alt="" class="button-icon" decoding="async">
-                                <div>download cv as pdf</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                
+                          <section class="contact-panel" id="contact" aria-labelledby="contact-title">
+            <div class="contact-intro"><span class="contact-icon-large" aria-hidden="true">✉</span><div>
+              <h2 id="contact-title">Contact</h2>
+              <strong>Let's work together!</strong>
+              <p>Open to professional conversations, projects, and collaborations.</p>
+            </div></div>
+            <div class="contact-options">
+              <a href="mailto:job@eplus.dev"><span aria-hidden="true">✉</span> job@eplus.dev</a>
+              <span><span aria-hidden="true">⌖</span> Ho Chi Minh City, VN</span>
+              <a href="https://github.com/hoangsvit" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">⌘</span> GitHub</a>
+            </div>
+          </section>
                 <div class="section-wrap last-section">
                     <div class="additional-info-text">I hereby give consent for my personal data included in my
                         application to be processed for the purposes <br>of the recruitment process.</div>
@@ -409,35 +440,10 @@
                     </div>
                 </div>
             </div>
-            <div class="contact-info-wrap"><img
-                    src="images/6673a17a9cff71312139ca62_z4331348261679_cc8e46084a59d8fbf2e34e9bc40f4177.jpg"
-                    loading="lazy" alt="Portrait of David Nguyen" class="profile-image" decoding="async">
-                <div class="under-picture-info">
-                    <div class="name-text">David Nguyen</div>
-                    <div class="age-text">- Fullstack Developer -</div>
-                    <div class="contact-links-wrap"><a href="https://maps.app.goo.gl/1PNSKzAUSidUuz219" target="_blank"
-                            class="contact-link w-inline-block" rel="noopener noreferrer"><img src="images/66739e97034d3fbe8f04d130_location.svg"
-                                loading="lazy" alt="" class="contact-icon" decoding="async">
-                            <div>Ho Chi Minh city, VN</div>
-                        </a><div class="contact-link w-inline-block" aria-label="Phone number partially masked"><img
-                                src="images/66739e97034d3fbe8f04d139_phone.svg" loading="lazy" alt=""
-                                class="contact-icon" decoding="async">
-                            <div>+84 365 455 xxx</div>
-                        </div><a href="mailto:job@eplus.dev" class="contact-link w-inline-block"><img
-                                src="images/66739e97034d3fbe8f04d136_email.svg" loading="lazy" alt=""
-                                class="contact-icon" decoding="async">
-                            <div>job@eplus.dev</div>
-                        </a></div>
-                    <div class="buttons-wrap"><a href="assets/pdf/DavidNguyen-Resume.pdf" download="DavidNguyen-Resume.pdf" type="application/pdf" class="download-cv-button w-inline-block">
-                            <div class="button-content-wrap"><img src="images/66739e97034d3fbe8f04d129_download.svg"
-                                    loading="lazy" alt="" class="button-icon" decoding="async">
-                                <div>download cv as pdf</div>
-                            </div>
-                        </a></div>
-                </div>
-            </div>
+            
         </div>
-    </div>
+    </main>
+    <script src="js/redesign.js" defer></script>
 </body>
 
 </html>
