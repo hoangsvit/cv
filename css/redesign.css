@@ -63,6 +63,9 @@ h1,h2{font-family:"Source Serif Pro",Georgia,serif;letter-spacing:-.035em}
 .skill-card h3 span{color:var(--orange);font-size:19px}
 .tag-list{display:flex;flex-wrap:wrap;gap:5px}
 .tag-list span{display:inline-block;background:#f3f3f4;border-radius:100px;padding:3px 8px;line-height:1.45;font-size:11px;color:#3d3e45}
+.skill-more{margin-top:9px;font-size:11px;color:var(--muted)}
+.skill-more summary{cursor:pointer;color:var(--orange-dark);font-weight:700;min-height:24px}
+.skill-more .tag-list{margin-top:7px}
 #experience>.section-content-wrap{position:relative;border:1px solid var(--line);border-radius:13px;padding:17px 19px 15px;margin-bottom:11px;box-shadow:0 3px 12px rgba(44,32,22,.025);background:#fff}
 #experience>.section-content-wrap:first-of-type{background:#fff8f3;border-color:#f5e6dd}
 #experience>.section-content-wrap::before{content:"";position:absolute;width:8px;height:8px;top:22px;left:-24px;background:var(--orange);border-radius:50%;box-shadow:0 0 0 4px #fff}
