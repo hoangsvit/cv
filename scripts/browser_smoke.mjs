@@ -182,6 +182,15 @@ try {
     await fs.mkdir(output, { recursive: true });
     const screenshot = await command('Page.captureScreenshot', { format: 'png' });
     await fs.writeFile(path.join(output, `${device.name}.png`), Buffer.from(screenshot.data, 'base64'));
+
+    // Full-page screenshot makes lower sections easy to review for blank regions.
+    const metrics = await command('Page.getLayoutMetrics');
+    const pageSize = metrics.cssContentSize || metrics.contentSize;
+    const full = await command('Page.captureScreenshot', {
+      format: 'png', captureBeyondViewport: true,
+      clip: { x: 0, y: 0, width: device.width, height: Math.ceil(pageSize.height), scale: 1 }
+    });
+    await fs.writeFile(path.join(output, `${device.name}-full.png`), Buffer.from(full.data, 'base64'));
   }
   if (failures.length) {
     for (const failure of failures) console.error('FAIL:', failure);
