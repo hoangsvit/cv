@@ -67,7 +67,7 @@ h1,h2{font-family:"Source Serif Pro",Georgia,serif;letter-spacing:-.035em}
 .skill-more summary{cursor:pointer;color:var(--orange-dark);font-weight:700;min-height:24px}
 .skill-more .tag-list{margin-top:7px}
 #experience>.section-content-wrap{position:relative;border:1px solid var(--line);border-radius:13px;padding:17px 19px 15px;margin-bottom:11px;box-shadow:0 3px 12px rgba(44,32,22,.025);background:#fff}
-#experience>.section-content-wrap:first-of-type{background:#fff8f3;border-color:#f5e6dd}
+#experience>.section-content-wrap:nth-of-type(2){background:#fff8f3;border-color:#f5e6dd}
 #experience>.section-content-wrap::before{content:"";position:absolute;width:8px;height:8px;top:22px;left:-24px;background:var(--orange);border-radius:50%;box-shadow:0 0 0 4px #fff}
 #experience>.section-content-wrap::after{content:"";position:absolute;left:-21px;top:35px;bottom:-32px;width:1px;background:#eee5df}
 #experience>.section-content-wrap:last-of-type::after{display:none}
@@ -86,7 +86,7 @@ h1,h2{font-family:"Source Serif Pro",Georgia,serif;letter-spacing:-.035em}
 #experience{display:block}
 #experience>.section-name-wrap{margin-bottom:18px}
 #experience>.section-content-wrap{margin-left:22px}
-#experience>.section-content-wrap:first-of-type{background:#fff8f3;border-color:#f5e6dd}
+#experience>.section-content-wrap:nth-of-type(2){background:#fff8f3;border-color:#f5e6dd}
 #experience>.section-content-wrap::before{left:-19px}
 #experience>.section-content-wrap::after{left:-16px}
 #education,#certificates{grid-column:1/-1;min-width:0;padding:25px 4px;display:block}
