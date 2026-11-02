@@ -120,6 +120,33 @@ try {
       console.log(`${device.name} ${link.hash}: ${jump.ms.toFixed(1)}ms`);
     }
 
+    // Verify the actual hamburger / native disclosure interaction, not just anchor IDs.
+    if (device.mobile) {
+      const interactions = await evaluate(`(() => {
+        const menu = document.querySelector('.mobile-nav');
+        menu.open = false;
+        menu.querySelector('summary').click();
+        const opened = menu.open;
+        menu.querySelector('nav a[href="#skills"]').click();
+        const closedByNavigation = !menu.open;
+        menu.querySelector('summary').click();
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        const closedByEscape = !menu.open;
+        return { opened, closedByNavigation, closedByEscape };
+      })()`);
+      check(interactions.opened && interactions.closedByNavigation && interactions.closedByEscape,
+        'Mobile hamburger must open, close on navigation and Escape');
+    }
+    const detailsWork = await evaluate(`(() => {
+      const item = document.querySelector('#experience .experience-details');
+      if (!item) return false;
+      item.open = false;
+      item.querySelector('summary').click();
+      const opened = item.open && !!item.querySelector('.experience-full');
+      item.querySelector('summary').click();
+      return opened && !item.open;
+    })()`);
+    check(detailsWork, `${device.name}: project details cannot expand/collapse`);
     await evaluate("document.querySelector('.mobile-nav').open = false; scrollTo(0, 0)");
     await fs.mkdir(output, { recursive: true });
     const screenshot = await command('Page.captureScreenshot', { format: 'png' });
