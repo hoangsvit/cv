@@ -103,6 +103,37 @@ try {
     check(layout.navPosition === 'static', `${device.name}: navigation is still sticky`);
     check(layout.links.length === 6, `${device.name}: expected six quick links`);
     if (device.mobile) check(layout.links.every(a => a.height >= 40), 'Mobile links need 40px+ tap targets');
+    const visualLayout = await evaluate(`(() => {
+      const education = document.querySelector('#education').getBoundingClientRect();
+      const certificates = document.querySelector('#certificates').getBoundingClientRect();
+      const cards = [...document.querySelectorAll('#certificates > .section-content-wrap')].map(el => el.getBoundingClientRect());
+      const heading = document.querySelector('#experience .section-name-wrap .h2').getBoundingClientRect();
+      const headingFont = parseFloat(getComputedStyle(document.querySelector('#experience .section-name-wrap .h2')).lineHeight);
+      const uniqueColumns = new Set(cards.map(rect => Math.round(rect.x / 12))).size;
+      return {
+        educationBottom: education.bottom,
+        certTop: certificates.top,
+        certWidth: certificates.width,
+        certCards: cards.length,
+        minCardWidth: Math.min(...cards.map(rect => rect.width)),
+        uniqueColumns,
+        headingHeight: heading.height,
+        headingLineHeight: headingFont,
+        skillsMaxHeight: Math.max(...[...document.querySelectorAll('.skill-card')].map(el => el.getBoundingClientRect().height))
+      };
+    })()`);
+    check(visualLayout.certCards === 7, `${device.name}: expected 7 certificate cards`);
+    check(visualLayout.certTop >= visualLayout.educationBottom - 5,
+      `${device.name}: education/certificates overlap or are on a blank half-page row`);
+    check(visualLayout.uniqueColumns >= 2,
+      `${device.name}: certificate cards unexpectedly form a single narrow column`);
+    check(visualLayout.minCardWidth >= (device.mobile ? 145 : 180),
+      `${device.name}: certificate cards too narrow (${visualLayout.minCardWidth}px)`);
+    check(visualLayout.headingHeight < visualLayout.headingLineHeight * 1.6,
+      `${device.name}: Experience heading wraps onto multiple lines`);
+    check(visualLayout.skillsMaxHeight <= (device.mobile ? 260 : 220),
+      `${device.name}: skills cards consume excess vertical space`);
+    console.log(`${device.name}: certificates ${visualLayout.uniqueColumns} cols, minimum card ${visualLayout.minCardWidth.toFixed(0)}px`);
 
     for (const link of layout.links) {
       const jump = await evaluate(`(() => {
