@@ -41,6 +41,8 @@ h1,h2{font-family:"Source Serif Pro",Georgia,serif;letter-spacing:-.035em}
 .hero-meta>span,.hero-meta a{display:inline-flex;gap:7px;align-items:center;white-space:nowrap}
 .hero-meta a:not(:last-child),.hero-meta>span{border-right:1px solid #d4d0cc;padding-right:16px}
 .hero-meta span[aria-hidden],.contact-options span[aria-hidden]{color:var(--orange);font-weight:700;font-size:17px}
+.meta-icon{width:16px;height:16px;flex:0 0 16px;object-fit:contain;filter:brightness(0) saturate(100%) invert(42%) sepia(99%) saturate(1988%) hue-rotate(359deg) brightness(96%) contrast(95%)}
+.github-monogram{display:inline-flex!important;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px;border-radius:50%;background:#f7e9df;color:#b64b00!important;font-size:8px!important;font-weight:800;letter-spacing:-.03em}
 .hero-portrait{height:242px;position:relative;display:flex;align-items:center;justify-content:center}
 .portrait-accent{position:absolute;inset:30px 30px 5px 0;background:linear-gradient(145deg,#ffe9d9,#f6d7c5);border-radius:55px;transform:rotate(-10deg)}
 .hero-portrait img{position:relative;width:220px;height:220px;object-fit:cover;object-position:center 20%;border:5px solid #fff;border-radius:38px;box-shadow:0 12px 35px rgba(34,20,12,.1)}
@@ -172,7 +174,7 @@ h1,h2{font-family:"Source Serif Pro",Georgia,serif;letter-spacing:-.035em}
   .section-icon-box{width:36px;height:36px;flex-basis:36px;border-radius:10px}
   .section-icon-box img{width:22px;height:22px}
   .skills-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
-  .skill-card{padding:12px 14px}
+  .skill-card{padding:12px 14px;min-height:0}
   .skill-card h3{margin-bottom:6px}
   #experience>.section-content-wrap{margin-left:13px;margin-bottom:11px;padding:14px 14px}
   #experience>.section-content-wrap::before{left:-18px}
